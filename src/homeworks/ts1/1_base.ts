@@ -32,7 +32,7 @@ export const getTransformFromCss = (transformCssString: string): Transform => {
   };
 };
 
-export const getColorContrastValue = ([red, green, blue]: number[]): number =>
+export const getColorContrastValue = ([red, green, blue]: [number, number, number]): number =>
   // http://www.w3.org/TR/AERT#color-contrast
   Math.round((red * 299 + green * 587 + blue * 114) / 1000);
 
@@ -41,7 +41,7 @@ export const getContrastType = (contrastValue: number): string => (contrastValue
 export const shortColorRegExp = /^#[0-9a-f]{3}$/i;
 export const longColorRegExp = /^#[0-9a-f]{6}$/i;
 
-export const checkColor = (color: string): void => {
+export const checkColor = (color: string): void | never => {
   if (!longColorRegExp.test(color) && !shortColorRegExp.test(color)) throw new Error(`invalid hex color: ${color}`);
 };
 
@@ -59,19 +59,19 @@ export const hex2rgb = (color: string): number[] => {
   return [red, green, blue];
 };
 
-interface Number {
+interface ArrNumber {
   value: number;
   number: number;
 }
 
-export const getNumberedArray = (arr: number[]): Number[] => arr.map((value, number) => ({ value, number }));
+export const getNumberedArray = (arr: number[]): ArrNumber[] => arr.map((value, number) => ({ value, number }));
 
-interface String {
+interface ArrString {
   value: number;
   number: number;
 }
 
-export const toStringArray = (arr: String[]): string[] => arr.map(({ value, number }) => `${value}_${number}`);
+export const toStringArray = (arr: ArrString[]): string[] => arr.map(({ value, number }) => `${value}_${number}`);
 
 
 interface Customer {
